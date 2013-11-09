@@ -13,8 +13,6 @@ include Command
 	# execute(string) - return nothing
 	# Executes the command's effects. Recieves anything in the chat message after the
 	def execute(parameter, room)
-		puts "executing help"
-
 		if (parameter == nil || parameter.strip == "")
 			room.say help_message
       return
