@@ -1,7 +1,7 @@
 *.gem
 *.rbc
 .bundle
-.config
+config.yaml
 coverage
 InstalledFiles
 lib/bundler/man
