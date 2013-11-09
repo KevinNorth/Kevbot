@@ -1,4 +1,4 @@
-module Config
+module KevbotConfiguration
 	require 'yaml'
 
 	def self.load_config
