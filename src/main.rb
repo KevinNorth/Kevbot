@@ -2,7 +2,7 @@ require 'turntabler'
 require_relative 'config.rb'
 require_relative "kevbot_state.rb"
 require_relative 'commands/command.rb'
-require_relative 'commands/dance/dance_details.rb'
+require_relative 'dance/dance.rb'
 
 config = KevbotConfiguration.load_config
 

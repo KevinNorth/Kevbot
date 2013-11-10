@@ -1,7 +1,7 @@
 require_relative '../kevbot_state.rb'
 require_relative 'command.rb'
 
-class AddToQueue
+class AddToQueueCommand
 include Command
 
   # Returns an array of strings that can be used as command names in the chat.
@@ -17,15 +17,19 @@ include Command
     room = client.room
     queue = state.room_queue
 
-    if queue.push_user user
-      room.say "@#{user.name}, I added you to the queue."
+    if user.dj?
+      room.say "@#{user.name}, you're already on deck."
     else
-      if queue.is_user_in_queue? user
-        room.say "You're already in the queue, @#{user.name}!"
-      elsif queue.full?
-        room.say "The queue completely full, @#{user.name}."
+      if queue.push_user user
+        room.say "@#{user.name}, I added you to the queue."
       else
-        room.say "I couldn't add you to the queue, @#{user.name}"
+        if queue.is_user_in_queue? user
+          room.say "You're already in the queue, @#{user.name}!"
+        elsif queue.full?
+          room.say "The queue completely full, @#{user.name}."
+        else
+          room.say "I couldn't add you to the queue, @#{user.name}"
+        end
       end
     end
   end

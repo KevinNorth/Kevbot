@@ -1,7 +1,7 @@
 require_relative '../kevbot_state.rb'
 require_relative 'command.rb'
 
-class CheckQueue
+class CheckQueueCommand
 include Command
 
   # Returns an array of strings that can be used as command names in the chat.
@@ -20,7 +20,7 @@ include Command
 
     if queue.empty?
       room.say "The queue is empty."
-      if room.djs.size < room.dj_capacity
+      if (user.dj?) && (room.djs.size < room.dj_capacity)
         room.say "Feel free to get on deck!"
       end
     else

@@ -1,9 +1,9 @@
 require 'turntabler'
 require_relative '../kevbot_state.rb'
-require_relative 'dance/dance_details.rb'
+require_relative '../dance/dance.rb'
 require_relative 'command.rb'
 
-class Dance
+class DanceCommand
 include Command
   # Returns an array of strings that can be used as command names in the chat.
   def names()
@@ -23,7 +23,7 @@ include Command
     end
 
     if active_dance == nil
-      dances = DanceDetails.GetAllDances
+      dances = Dance.GetAllDances
       active_dance = dances.sample
 
       state.active_dance = active_dance

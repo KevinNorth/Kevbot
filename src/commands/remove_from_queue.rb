@@ -1,7 +1,7 @@
 require_relative '../kevbot_state.rb'
 require_relative 'command.rb'
 
-class RemoveFromQueue
+class RemoveFromQueueCommand
 include Command
 
   # Returns an array of strings that can be used as command names in the chat.

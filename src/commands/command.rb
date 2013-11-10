@@ -11,14 +11,14 @@ module Command
 
 	def self.GetAllCommands()
 		commands = []
-		commands.push Help.new
-		commands.push Avatar.new
-		commands.push Dance.new
-		commands.push ListCommands.new
-		commands.push AddToQueue.new
-		commands.push RemoveFromQueue.new
-		commands.push CheckQueue.new
-		commands.push Nsfw.new
+		commands.push HelpCommand.new
+		commands.push AvatarCommand.new
+		commands.push DanceCommand.new
+		commands.push ListCommandsCommand.new
+		commands.push AddToQueueCommand.new
+		commands.push RemoveFromQueueCommand.new
+		commands.push CheckQueueCommand.new
+		commands.push NsfwCommand.new
 		return commands
 	end
 
