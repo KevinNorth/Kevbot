@@ -20,10 +20,36 @@ class KevbotState
   # is inappropriate.
   attr_accessor :nsfw_complainers
 
+  # This keeps track of when each user was last active.
+  attr_accessor :last_activity
+
+  # This keeps track of which AFK DJs have been reminded to stay active
+  # on deck
+  attr_accessor :sent_dj_reminders
+
+  # This keeps track of when a DJ slot became available so that
+  # users in queue who take too long to get on deck can be removed
+  # from the queue
+  attr_accessor :time_deck_slot_became_available
+
+  # Thie keeps track of whether the user at the front of the queu has
+  # been reminded to claim his/her spot
+  attr_accessor :sent_queue_reminder
+
   def initialize(client)
     @active_dance = nil
     @previous_avatar_id = client.user.avatar.id
     @room_queue = RoomQueue.new
     @nsfw_complainers = []
+    @last_activity = {}
+    @sent_dj_reminders = {}
+
+    for user in client.room.listeners
+      @last_activity[user] = Time.now
+      @sent_dj_reminders[user] = false
+    end
+
+    @time_deck_slot_became_available = Time.now
+    @sent_queue_reminder = false
   end
 end
