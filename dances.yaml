@@ -70,7 +70,11 @@ dances:
   - response: "Instead of dancing, I'm customizing my character's appearance."
     avatar:
       - options:
-        - 1
+        - 1004
+        - 7
+        - 8
+        - 34
+        - 5
       - keep: true
   - response: "Instead of dancing, I'm grinding my EXPs."
   - response: "Instead of dancing, I'm growing a mustache by force of will."
@@ -79,6 +83,12 @@ dances:
     avatar:
       - options:
         - 1
+        - 1003
+        - 3
+        - 4
+        - 6
+        - 2
+        - 1002
       - keep: false
   - response: "Instead of dancing, I'm going to defeat the reapers."
   - response: "Instead of fighting the final boss, I'm dancing."

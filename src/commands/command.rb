@@ -1,10 +1,12 @@
 # This module is the primary module for chat commands in Kevbot.
 module Command
 	require_relative 'help.rb'
+	require_relative 'avatar.rb'
 
 	def self.GetAllCommands()
 		commands = []
 		commands.push Help.new
+		commands.push Avatar.new
 		return commands
 	end
 
@@ -13,11 +15,11 @@ module Command
 	# names() - return an array of strings
 	# Returns an array of strings that can be used as command names in the chat.
 	#
-	# execute(string, room) - return nothing
+	# execute(string, client) - return nothing
 	# Executes the command's effects.
 	# Recieves:
 	#   anything in the chat message after the command name
-	#   the current room
+	#   the current client
 	#
 	# help_message() - return a string
 	# Returns a message that can be used with the `help` command to describe what the command does to users.
