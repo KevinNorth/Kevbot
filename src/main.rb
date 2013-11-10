@@ -23,12 +23,12 @@ Turntabler.run do
     # Enforce that DJs should not go AFK on deck.
     for dj in client.room.djs
       seconds_away = Time.now - state.last_activity[dj]
-      if seconds_away >= 180 && (not state.sent_dj_reminders[dj])
+      if seconds_away >= 900 && (not state.sent_dj_reminders[dj])
         room.say "Stay active on deck, @#{dj.name}"
         state.sent_dj_reminders[dj] = true
         puts state.sent_dj_reminders[dj]
       end
-      if seconds_away >= 300
+      if seconds_away >= 1200
         dj.remove_as_dj
       end
     end
@@ -38,10 +38,10 @@ Turntabler.run do
     unless queue.empty? && (room.djs.count < room.dj_capacity)
       head = queue.peek
       seconds_away = Time.now - state.time_deck_slot_became_available
-      if (seconds_away > 60) && (not state.sent_queue_reminder)
+      if (seconds_away > 90) && (not state.sent_queue_reminder)
         room.say "If you don't get on deck soon, @#{head.name}, you'll lose your queue spot."
       end
-      if seconds_away > 100
+      if seconds_away > 150
         room.say "@#{head.name} took too long to get on deck."
         record_dj_spot_available state
         queue.pull_user
