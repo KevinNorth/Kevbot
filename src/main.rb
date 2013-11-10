@@ -23,8 +23,6 @@ Turntabler.run do
   client.on :heartbeat do
     room = client.room
 
-    puts "heartbeat"
-
     # Enforce that DJs should not go AFK on deck.
     for dj in client.room.djs
       seconds_away = Time.now - state.last_activity[dj]

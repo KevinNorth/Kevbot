@@ -19,6 +19,8 @@ include Command
 
     if user.dj?
       room.say "@#{user.name}, you're already on deck."
+    elsif (queue.empty?) && (room.djs.size < room.dj_capacity)
+      room.say "There are empty DJ spots. Get on deck!"
     else
       if queue.push_user user
         room.say "@#{user.name}, I added you to the queue."
