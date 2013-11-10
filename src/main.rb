@@ -4,32 +4,6 @@ require_relative "kevbot_state.rb"
 require_relative 'commands/command.rb'
 require_relative 'commands/dance/dance_details.rb'
 
-def user_left(user, state)
-  state.room_queue.remove_user user
-end
-
-def dj_attempted_to_get_on(user, state, room)
-  queue = state.room_queue
-  if queue.can_user_dj? user
-    queue.remove_user user
-  else
-    user.remove_as_dj
-    if queue.is_user_in_queue? user
-      room.say "Please wait your turn, @#{user.name}!"
-    else
-      room.say "@#{user.name}, if you'd like to DJ, please add yourself to the queue."
-      room.say "Use /q? to check the queue and /q+ to add yourself."
-    end
-  end
-end
-
-def dj_stopped(user, state, room)
-  unless state.room_queue.empty?
-    next_dj = state.room_queue.peek
-    room.say "@#{next_dj.name}, you can get on deck now!"
-  end
-end
-
 config = KevbotConfiguration.load_config
 
 Turntabler.run do
@@ -66,21 +40,38 @@ Turntabler.run do
 
     # Remove the active dance at the end of the song
     state.active_dance = nil
+
+    # Clear the nsfw complainers collection
+    state.nsfw_complainers = []
   end
 
   client.on :user_left do |user|
-    user_left user, state
+    state.room_queue.remove_user user
   end
 
   client.on :user_booted do |user|
-    user_left user, state
+    state.room_queue.remove_user user
   end
 
   client.on :dj_added do |user|
-    dj_attempted_to_get_on user, state, client.room
+    queue = state.room_queue
+    if queue.can_user_dj? user
+      queue.remove_user user
+    else
+      user.remove_as_dj
+      if queue.is_user_in_queue? user
+        room.say "Please wait your turn, @#{user.name}!"
+      else
+        room.say "@#{user.name}, if you'd like to DJ, please add yourself to the queue."
+        room.say "Use /q? to check the queue and /q+ to add yourself."
+      end
+    end
   end
 
   client.on :dj_removed do |user|
-    dj_stopped user, state, client.room
+    unless state.room_queue.empty?
+      next_dj = state.room_queue.peek
+      room.say "@#{next_dj.name}, you can get on deck now!"
+    end
   end
 end
