@@ -2,7 +2,6 @@
 *.rbc
 .bundle
 .DS_Store
-config.yaml
 coverage
 InstalledFiles
 lib/bundler/man
