@@ -1,7 +1,7 @@
 # This module is the primary module for chat commands in Kevbot.
 module Command
 	require_relative 'help.rb'
-	require_relative 'avatar.rb'
+#	require_relative 'avatar.rb'
 	require_relative 'dance.rb'
 	require_relative 'list_commands.rb'
 	require_relative 'add_to_queue.rb'
@@ -12,7 +12,9 @@ module Command
 	def self.GetAllCommands()
 		commands = []
 		commands.push HelpCommand.new
-		commands.push AvatarCommand.new
+		# The avatar command was used for testing, but I don't want it on
+		# my bot in production.
+#		commands.push AvatarCommand.new
 		commands.push DanceCommand.new
 		commands.push ListCommandsCommand.new
 		commands.push AddToQueueCommand.new

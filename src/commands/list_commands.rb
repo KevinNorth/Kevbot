@@ -15,9 +15,17 @@ include Command
   def execute(parameter, user, client, state)
     commands = Command.GetAllCommands
 
+    command_names = []
+
     for command in commands
-      client.room.say command.names.join(' or ')
+      for name in command.names
+        command_names.push name
+      end
     end
+
+    command_names.sort!
+
+    client.room.say command_names.join(', ')
   end
 
   # help_message() - return a string
