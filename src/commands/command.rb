@@ -4,6 +4,9 @@ module Command
 	require_relative 'avatar.rb'
 	require_relative 'dance.rb'
 	require_relative 'list_commands.rb'
+	require_relative 'add_to_queue.rb'
+	require_relative 'remove_from_queue.rb'
+	require_relative 'check_queue.rb'
 
 	def self.GetAllCommands()
 		commands = []
@@ -11,6 +14,9 @@ module Command
 		commands.push Avatar.new
 		commands.push Dance.new
 		commands.push ListCommands.new
+		commands.push AddToQueue.new
+		commands.push RemoveFromQueue.new
+		commands.push CheckQueue.new
 		return commands
 	end
 
@@ -19,10 +25,11 @@ module Command
 	# names() - return an array of strings
 	# Returns an array of strings that can be used as command names in the chat.
 	#
-	# execute(string, client) - return nothing
+	# execute(params, user, client, state) - return nothing
 	# Executes the command's effects.
 	# Recieves:
 	#   anything in the chat message after the command name
+	#   the user who sent the message
 	#   the current client
 	#   the current KevbotState
 	#

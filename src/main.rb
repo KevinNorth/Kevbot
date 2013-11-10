@@ -23,7 +23,7 @@ Turntabler.run do
     		if command.check_command_name(string)
     			puts "running command #{string}"
     			params = command.get_parameters(string)
-    			command.execute(params, client, state)
+    			command.execute(params, message.sender, client, state)
     			break
     		end
     	end

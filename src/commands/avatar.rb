@@ -12,7 +12,7 @@ include Command
   end
 
   # Sets the avatar, or returns a list of avatars that can be used
-  def execute(parameter, client, state)
+  def execute(parameter, user, client, state)
     if (parameter == nil || parameter.strip == "")
       ids = []
       for avatar in client.avatars

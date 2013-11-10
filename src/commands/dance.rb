@@ -13,7 +13,7 @@ include Command
   end
 
   # Sets the avatar, or returns a list of avatars that can be used
-  def execute(parameter, client, state)
+  def execute(parameter, user, client, state)
     active_dance = state.active_dance
     room = client.room
 

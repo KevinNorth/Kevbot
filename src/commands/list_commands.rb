@@ -12,11 +12,11 @@ include Command
   end
 
   # Lists all commands
-  def execute(parameter, client, state)
+  def execute(parameter, user, client, state)
     commands = Command.GetAllCommands
 
     for command in commands
-      client.room.say command.names.join('/')
+      client.room.say command.names.join(' or ')
     end
   end
 
