@@ -5,9 +5,6 @@ require_relative 'command.rb'
 
 class Dance
 include Command
-  @@current_dance_id = 0
-
-
   # Returns an array of strings that can be used as command names in the chat.
   def names()
     names = []
@@ -26,9 +23,8 @@ include Command
     end
 
     if active_dance == nil
-      @@current_dance_id += 1
       dances = DanceDetails.GetAllDances
-      active_dance = dances[@@current_dance_id % dances.size]
+      active_dance = dances.sample
 
       state.active_dance = active_dance
 
@@ -43,16 +39,22 @@ include Command
         for avatar in client.avatars
           if avatar.id == id
             if avatar.available?
-              avatar.set id
+              avatar.set
             end
           end
         end
       end
 
+      # Start displaying delayed responses
+      if active_dance.later_response
+        async_show_responses active_dance.later_response,\
+          active_dance.delay_between_responses, room
+      end
+
     else # if there is already an active_dance
 
       if active_dance.wait_to_dance
-        room.current_song.vote
+        upvote_song(room)
       end
 
       if active_dance.subsequent_dance_command_response
@@ -68,6 +70,14 @@ include Command
       room.say "(I couldn't upvote the song."
       room.say "Turntable may be capping my votes if I've been voting unsually quickly.)"
     end
+  end
+
+  # Shows dance.later_response asynchronously
+  def async_show_responses(response, delay, room)
+    Thread.new {
+      sleep delay
+      room.say response
+    }
   end
 
   # help_message() - return a string

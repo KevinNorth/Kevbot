@@ -3,25 +3,12 @@ dances:
   - response: "I'm too busy punching out Cthulu!"
   - response: "I'm going to dance to this song by doing hundreds of push-ups and crunches."
   - response: "AAARRRRRGGGGGHHHHH"
-  - response: "(>^_^)>"
-    later_responses:
-      - "^(^_^)^"
-      - "<(^_^<)"
-      - "(v^_^v)"
-      - "(>^_^)>"
-      - "^(^_^)^"
-      - "<(^_^<)"
-      - "(v^_^v)"
-      - "(>^_^)>"
-    delay_between_responses: 1
   - response: "/me drinks potion of +10 testosterone"
   - response: "Whenever I move my body, things blow up."
-    later_responses:
-     - "How do I make it stop?"
+    later_response: "How do I make it stop?"
     delay_between_responses: 3
   - response: "All of my dance moves are actually repurposed fighting game moves."
-    later_responses:
-     - "This one uses half my meter."
+    later_response: "This one uses half my meter."
     delay_between_responses: 2
   - response: "My subwoofer inhaled my cat."
   - response: "My subwoofer inhaled my car."
@@ -59,8 +46,7 @@ dances:
   - response: "Instead of dancing, I am earning weapon upgrades."
   - response: "Instead of dancing, I'm exploring an abandoned research facility."
   - response: "Instead of dancing, I'm wandering through a dark house with only a camera and my wits."
-    later_responses:
-     - "Now it's just my camera."
+    later_response: "Now it's just my camera."
     delay_between_responses: 10
     subsequent_dance_commands: "/me gibbers softly"
   - response: "Instead of dancing, I am shouting at four dragons."
@@ -94,6 +80,5 @@ dances:
   - response: "Instead of fighting the final boss, I'm dancing."
   - response: "Instead of using all caps, I'm dancing."
   - response: "Instead of slaying a dragon and saving the princess, I'm dancing."
-    later_responses:
-      - "The princess can wait."
+    later_response: "The princess can wait."
     delay_between_responses: 2

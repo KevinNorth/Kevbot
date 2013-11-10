@@ -10,7 +10,7 @@ class DanceDetails
       for config in dance_config["dances"]
         response = config["response"]
 
-        later_responses = config["later_responses"]
+        later_response = config["later_response"]
         delay_between_responses = config["delay_between_responses"]
 
         wait_to_dance = config["wait_to_dance"] ? \
@@ -27,7 +27,7 @@ class DanceDetails
           avatar_options = []
         end
 
-        dance = DanceDetails.new(response, later_responses,\
+        dance = DanceDetails.new(response, later_response,\
          delay_between_responses, wait_to_dance, subsequent_dance_command_response,\
          change_avatar, keep_new_avatar, avatar_options)
         @@all_dances.push dance
@@ -38,16 +38,16 @@ class DanceDetails
   end
 
   attr_reader :response
-  attr_reader :later_responses, :delay_between_responses
+  attr_reader :later_response, :delay_between_responses
   attr_reader :wait_to_dance
   attr_reader :subsequent_dance_command_response
   attr_reader :change_avatar, :keep_new_avatar, :avatar_options
 
-  def initialize(response, later_responses, delay_between_responses,\
+  def initialize(response, later_response, delay_between_responses,\
     wait_to_dance, subsequent_dance_command_response, change_avatar,\
     keep_new_avatar, avatar_options)
     @response = response
-    @later_responses = later_responses
+    @later_response = later_response
     @delay_between_responses = delay_between_responses
     @wait_to_dance = wait_to_dance
     @subsequent_dance_command_response = subsequent_dance_command_response
