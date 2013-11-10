@@ -1,4 +1,0 @@
----
-password: 	"12345" # Robot's Turntbale account password
-email: 		"example@example.com" # Robot's Turntbale account password
-room:		"my_great_room" # See https://github.com/alaingilbert/Turntable-API/wiki/How-to-find-the:-auth,-userid-and-roomid for instructions

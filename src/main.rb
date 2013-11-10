@@ -1,10 +1,7 @@
 require 'turntabler'
-require_relative 'config.rb'
 require_relative "kevbot_state.rb"
 require_relative 'commands/command.rb'
 require_relative 'dance/dance.rb'
-
-config = KevbotConfiguration.load_config
 
 def record_user_activity(user, state)
   state.last_activity[user] = Time.now
@@ -17,7 +14,7 @@ def record_dj_spot_available(state)
 end
 
 Turntabler.run do
-  client = Turntabler::Client.new(config['email'], config['password'], :room => config['room'], :reconnect => true, :reconnect_wait => 30)
+  client = Turntabler::Client.new(ENV['EMAIL'], ENV['PASSWORD'], :room => ENV['ROOM'], :reconnect => true, :reconnect_wait => 30)
   state = KevbotState.new (client)
 
   client.on :heartbeat do
