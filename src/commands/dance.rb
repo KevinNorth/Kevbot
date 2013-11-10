@@ -24,7 +24,7 @@ include Command
 
     if active_dance == nil
       dances = DanceDetails.GetAllDances
-      active_dance = dances.sample
+      active_dance = dances[[48, 44].sample]  # .sample
 
       state.active_dance = active_dance
 
@@ -35,13 +35,25 @@ include Command
       end
 
       if active_dance.change_avatar
+
         id = active_dance.avatar_options.sample
+        # Make sure we don't pick the same avatar if there are options
+        if active_dance.avatar_options.size > 1
+          while client.user.avatar.id == id do
+            id = active_dance.avatar_options.sample
+          end
+        end
+
         for avatar in client.avatars
           if avatar.id == id
             if avatar.available?
               avatar.set
             end
           end
+        end
+
+        if active_dance.keep_new_avatar
+          state.previous_avatar_id = id
         end
       end
 

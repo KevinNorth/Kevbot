@@ -30,19 +30,11 @@ Turntabler.run do
 
   client.on :song_ended do |song|
     # Change back avatar if it was changed using a dance command
-    if state.active_dance
-      active_dance = state.active_dance
-      if active_dance.change_avatar
-        unless active_dance.keep_new_avatar
-          id = state.previous_avatar_id
-
-          for avatar in client.avatars
-            if avatar.id == id
-              if avatar.available?
-                avatar.set
-              end
-            end
-          end
+    id = state.previous_avatar_id
+    for avatar in client.avatars
+      if avatar.id == id
+        if avatar.available?
+          avatar.set
         end
       end
     end
