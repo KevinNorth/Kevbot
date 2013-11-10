@@ -3,12 +3,14 @@ module Command
 	require_relative 'help.rb'
 	require_relative 'avatar.rb'
 	require_relative 'dance.rb'
+	require_relative 'list_commands.rb'
 
 	def self.GetAllCommands()
 		commands = []
 		commands.push Help.new
 		commands.push Avatar.new
 		commands.push Dance.new
+		commands.push ListCommands.new
 		return commands
 	end
 

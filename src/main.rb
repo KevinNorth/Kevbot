@@ -14,18 +14,20 @@ Turntabler.run do
   state = KevbotState.new (client)
 
   client.on :user_spoke do |message|
-    string = message.content
-  	puts "recieved command #{string}"
+    unless message.sender == client.user
+      string = message.content
+    	puts "recieved command #{string}"
 
-  	#Respond to chat commands
-  	for command in Command.GetAllCommands()
-  		if command.check_command_name(string)
-  			puts "running command #{string}"
-  			params = command.get_parameters(string)
-  			command.execute(params, client, state)
-  			break
-  		end
-  	end
+    	#Respond to chat commands
+    	for command in Command.GetAllCommands()
+    		if command.check_command_name(string)
+    			puts "running command #{string}"
+    			params = command.get_parameters(string)
+    			command.execute(params, client, state)
+    			break
+    		end
+    	end
+    end
   end
 
   client.on :song_ended do |song|

@@ -24,7 +24,7 @@ include Command
 
     if active_dance == nil
       dances = DanceDetails.GetAllDances
-      active_dance = dances[[48, 44].sample]  # .sample
+      active_dance = dances.sample
 
       state.active_dance = active_dance
 
@@ -95,6 +95,6 @@ include Command
   # help_message() - return a string
   # Returns a message that can be used with the `help` command to describe what the command does to users.
   def help_message()
-    return 'I\'ll upvote the current song and say something terribly clever.'
+    return 'I\'ll upvote the current song and say something masculine.'
   end
 end
