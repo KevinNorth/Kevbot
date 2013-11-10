@@ -1,3 +1,5 @@
+require 'yaml'
+
 # A POCO that describes the behavior of the bot after a /dance command is issued
 # The behavior of a robot dance is in the /commands/dance.rb DanceCommand
 # class. That class uses this POCO to inform its behavior.
