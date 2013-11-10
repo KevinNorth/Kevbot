@@ -2,9 +2,8 @@ class DanceDetails
   @@all_dances = nil
 
   def self.GetAllDances()
-    if @@all_dances
-      return @@all_dances
-    else
+    # Lazy-load the dances the first time they're accessed
+    unless @@all_dances
       @@all_dances = []
 
       dance_config = YAML.load_file('dances.yaml')
@@ -28,11 +27,14 @@ class DanceDetails
           avatar_options = []
         end
 
-        @@all_dances.push DanceDetails.new(response, later_responses,\
+        dance = DanceDetails.new(response, later_responses,\
          delay_between_responses, wait_to_dance, subsequent_dance_command_response,\
          change_avatar, keep_new_avatar, avatar_options)
+        @@all_dances.push dance
       end
     end
+
+    return @@all_dances
   end
 
   attr_reader :response
@@ -48,7 +50,7 @@ class DanceDetails
     @later_responses = later_responses
     @delay_between_responses = delay_between_responses
     @wait_to_dance = wait_to_dance
-    @subsequent_dance_commands = subsequent_dance_commands
+    @subsequent_dance_command_response = subsequent_dance_command_response
     @change_avatar = change_avatar
     @keep_new_avatar = keep_new_avatar
     @avatar_options = avatar_options

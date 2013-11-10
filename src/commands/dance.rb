@@ -1,3 +1,4 @@
+require 'turntabler'
 require_relative '../kevbot_state.rb'
 require_relative 'dance/dance_details.rb'
 require_relative 'command.rb'
@@ -19,17 +20,22 @@ include Command
     active_dance = state.active_dance
     room = client.room
 
+    unless room.current_song
+      room.say "Play something, then ask me to dance!"
+      return
+    end
+
     if active_dance == nil
-      current_dance_id += 1
+      @@current_dance_id += 1
       dances = DanceDetails.GetAllDances
-      active_dance = dances[current_dance_id % dances.size]
+      active_dance = dances[@@current_dance_id % dances.size]
 
       state.active_dance = active_dance
 
       room.say active_dance.response
 
       unless active_dance.wait_to_dance
-        room.current_song.vote
+        upvote_song room
       end
 
       if active_dance.change_avatar
@@ -49,9 +55,18 @@ include Command
         room.current_song.vote
       end
 
-      if subsequent_dance_command_response
-        room.say subsequent_dance_command_response
+      if active_dance.subsequent_dance_command_response
+        room.say active_dance.subsequent_dance_command_response
       end
+    end
+  end
+
+  def upvote_song(room)
+    begin
+      room.current_song.vote
+    rescue Turntabler::APIError
+      room.say "(I couldn't upvote the song."
+      room.say "Turntable may be capping my votes if I've been voting unsually quickly.)"
     end
   end
 
