@@ -1,4 +1,4 @@
 ---
 password: 	"12345" # Robot's Turntbale account password
 email: 		"example@example.com" # Robot's Turntbale account password
-room:		"123456abcdef" # A Turntable's room URL is in the form "http://turntable.fm/<hexadecimal number>". Put the hexidecimal number here. 
+room:		"my_great_room" # A Turntable's room URL is in the form "http://turntable.fm/<room_id>". Put the room_id number here.
