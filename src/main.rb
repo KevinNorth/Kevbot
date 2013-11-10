@@ -1,6 +1,9 @@
 require 'turntabler'
 require_relative 'config.rb'
+require_relative "kevbot_state.rb"
 require_relative 'commands/command.rb'
+require_relative 'commands/dance/dance_details.rb'
+
 
 config = KevbotConfiguration.load_config
 
@@ -8,6 +11,7 @@ puts config["email"]
 
 Turntabler.run do
   client = Turntabler::Client.new(config['email'], config['password'], :room => config['room'], :reconnect => true, :reconnect_wait => 30)
+  state = KevbotState.new (client)
 
   client.on :user_spoke do |message|
     string = message.content
@@ -18,9 +22,31 @@ Turntabler.run do
   		if command.check_command_name(string)
   			puts "running command #{string}"
   			params = command.get_parameters(string)
-  			command.execute(params, client)
+  			command.execute(params, client, state)
   			break
   		end
   	end
+  end
+
+  client.on :song_ended do |song|
+    # Change back avatar if it was changed using a dance command
+    if state.active_song
+      active_sonce = state.active_song
+      if active_song.change_avatar
+        unless active_song.keep_new_avatar
+          id = state.previous_avatar_id
+
+          for avatar in client.avatars
+            if avatar.id == id
+              if avatar.available?
+                avatar.set
+              end
+            end
+          end
+        end
+      end
+    end
+
+
   end
 end

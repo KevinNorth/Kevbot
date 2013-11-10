@@ -1,3 +1,4 @@
+require_relative '../kevbot_state.rb'
 require_relative 'command.rb'
 
 class Avatar
@@ -11,7 +12,7 @@ include Command
   end
 
   # Sets the avatar, or returns a list of avatars that can be used
-  def execute(parameter, client)
+  def execute(parameter, client, state)
     if (parameter == nil || parameter.strip == "")
       ids = []
       for avatar in client.avatars
@@ -26,6 +27,7 @@ include Command
         if avatar.id == id
           if avatar.available?
             avatar.set
+            state.previous_avatar_id = id
           end
         end
       end

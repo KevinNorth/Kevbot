@@ -2,11 +2,13 @@
 module Command
 	require_relative 'help.rb'
 	require_relative 'avatar.rb'
+	require_relative 'dance.rb'
 
 	def self.GetAllCommands()
 		commands = []
 		commands.push Help.new
 		commands.push Avatar.new
+		commands.push Dance.new
 		return commands
 	end
 
@@ -20,6 +22,7 @@ module Command
 	# Recieves:
 	#   anything in the chat message after the command name
 	#   the current client
+	#   the current KevbotState
 	#
 	# help_message() - return a string
 	# Returns a message that can be used with the `help` command to describe what the command does to users.
