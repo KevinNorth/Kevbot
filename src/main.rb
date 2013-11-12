@@ -20,16 +20,24 @@ Turntabler.run do
   client.on :heartbeat do
     room = client.room
 
-    # Enforce that DJs should not go AFK on deck.
-    for dj in client.room.djs
-      seconds_away = Time.now - state.last_activity[dj]
-      if seconds_away >= 900 && (not state.sent_dj_reminders[dj])
-        room.say "Stay active on deck, @#{dj.name}"
-        state.sent_dj_reminders[dj] = true
-        puts state.sent_dj_reminders[dj]
-      end
-      if seconds_away >= 1200
-        dj.remove_as_dj
+    if (state.room_queue.empty?) && (room.djs.count >= room.dj_capacity)
+      # Enforce that DJs should not go AFK on deck.
+      for dj in client.room.djs
+        # Don't count time AFK before the last DJ got on deck
+        dj_time_afk = Time.now - state.last_activity[dj]
+        time_since_dj_got_on_deck = Time.now - state.time_newest_dj_got_on_deck
+
+        seconds_away = dj_time_afk > time_since_dj_got_on_deck ? \
+          time_since_dj_got_on_deck : dj_time_afk
+
+        if seconds_away >= 900 && (not state.sent_dj_reminders[dj])
+          room.say "Stay active on deck, @#{dj.name}"
+          state.sent_dj_reminders[dj] = true
+          puts state.sent_dj_reminders[dj]
+        end
+        if seconds_away >= 1200
+          dj.remove_as_dj
+        end
       end
     end
 
@@ -74,6 +82,17 @@ Turntabler.run do
     end
   end
 
+  client.on :song_started do |song|
+    # Remove the active dance at the end of the song
+    state.active_dance = nil
+
+    # Clear the nsfw complainers collection
+    state.nsfw_complainers = []
+
+    # Reset number of snags
+    state.num_snags = 0
+  end
+
   client.on :song_ended do |song|
     # Change back avatar if it was changed using a dance command
     id = state.previous_avatar_id
@@ -85,11 +104,8 @@ Turntabler.run do
       end
     end
 
-    # Remove the active dance at the end of the song
-    state.active_dance = nil
-
-    # Clear the nsfw complainers collection
-    state.nsfw_complainers = []
+    # State song stats
+    client.room.say "Stats for #{song.title}: #{song.up_votes_count} :arrow_up: #{song.down_votes_count} :arrow_down: #{state.num_snags} :heart_decoration:"
   end
 
   client.on :user_entered do |user|
@@ -109,6 +125,7 @@ Turntabler.run do
 
   client.on :dj_added do |user|
     record_user_activity user, state
+    state.time_newest_dj_got_on_deck = Time.now
 
     room = client.room
     queue = state.room_queue
@@ -148,5 +165,6 @@ Turntabler.run do
 
   client.on :song_snagged do |snag|
     record_user_activity snag.user, state
+    state.num_snags += 1
   end
 end

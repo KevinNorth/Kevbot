@@ -24,10 +24,7 @@ include Command
         room.say "Feel free to get on deck!"
       end
     else
-      room.say "The queue is:"
-      for user in queue.check
-        room.say user.name
-      end
+      room.say "The queue is: #{queue.check.join(', ')}"
     end
   end
 

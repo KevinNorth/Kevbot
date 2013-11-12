@@ -13,6 +13,9 @@ class KevbotState
   # any potential avatar changes
   attr_accessor :previous_avatar_id
 
+  # Counts the number of snags a song gets
+  attr_accessor :num_snags
+
   # This keeps track of the DJ queue
   attr_reader :room_queue
 
@@ -36,9 +39,14 @@ class KevbotState
   # been reminded to claim his/her spot
   attr_accessor :sent_queue_reminder
 
+  # This keeps track of the last time someone got on deck to DJ. This lets
+  # us avoid escorting DJs for inactivity while there are empty spots.
+  attr_accessor :time_newest_dj_got_on_deck
+
   def initialize(client)
     @active_dance = nil
     @previous_avatar_id = client.user.avatar.id
+    @num_snags = 0
     @room_queue = RoomQueue.new
     @nsfw_complainers = []
     @last_activity = {}
@@ -51,5 +59,6 @@ class KevbotState
 
     @time_deck_slot_became_available = Time.now
     @sent_queue_reminder = false
+    @time_newest_dj_got_on_deck = Time.now
   end
 end
