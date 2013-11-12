@@ -50,7 +50,7 @@ Turntabler.run do
         room.say "If you don't get on deck soon, @#{head.name}, you'll lose your queue spot."
       end
       if seconds_away > 150
-        room.say "@#{head.name} took too long to get on deck."
+        room.say "@#{head.name}, you took too long to get on deck."
         record_dj_spot_available state
         queue.pull_user
 

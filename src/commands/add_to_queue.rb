@@ -28,7 +28,7 @@ include Command
         if queue.is_user_in_queue? user
           room.say "You're already in the queue, @#{user.name}!"
         elsif queue.full?
-          room.say "The queue completely full, @#{user.name}."
+          room.say "The queue is completely full, @#{user.name}."
         else
           room.say "I couldn't add you to the queue, @#{user.name}"
         end
