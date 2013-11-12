@@ -8,6 +8,7 @@ module Command
 	require_relative 'remove_from_queue.rb'
 	require_relative 'check_queue.rb'
 	require_relative 'nsfw.rb'
+	require_relative 'rules.rb'
 
 	def self.GetAllCommands()
 		commands = []
@@ -21,6 +22,7 @@ module Command
 		commands.push RemoveFromQueueCommand.new
 		commands.push CheckQueueCommand.new
 		commands.push NsfwCommand.new
+		commands.push RulesCommand.new
 		return commands
 	end
 
