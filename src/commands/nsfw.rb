@@ -27,11 +27,15 @@ include Command
         when 2 # The only users are the robot and the complainer
           room.say "You're the only one in here."
           room.say "I promise you can't offend me. I'm a robot."
-        when 3
-          room.say "@#{room.current_dj.name}, mature music is not allowed in this room. Please skip your song."
-        else
-          if complainers.size >= calculate_complaint_limit(num_listeners)
+        when 3 # One listener
+          room.say "@#{room.current_dj.name}, nsfw music is not allowed in this room. Please skip your song."
+        else # Multiple listeners
+          num_complainers = complainers.size
+          complaint_limit = calculate_complaint_limit(num_listeners)
+          if num_complainers >= complaint_limit
             room.current_song.skip
+          else
+            room.say "If #{complaint_limit - num_complainers} more people complain, I'll skip the song."
           end
         end
       end
@@ -41,18 +45,17 @@ include Command
   # Calculates how many people need to complain about a song
   # before it will be skipped
   def calculate_complaint_limit(num_listeners)
+    num_listeners -= 2 # don't count the DJ and the bot
     case num_listeners
-    when 4
+    when 2
       return 2
-    when 5..7
+    when 3..5
       return 3
-    when 8..9
+    when 6..7
       return 4
-    when 9
-      return 4
-    when 10..16
+    when 8..14
       return 5
-    when 17..21
+    when 15..20
       return 6
     else
       return num_listeners / 3
