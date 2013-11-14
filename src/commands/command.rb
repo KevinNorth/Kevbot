@@ -50,7 +50,9 @@ module Command
 	#
 	# Returns: `true` if the chat string matches one of the names for this command, `false` otherwise
 	def check_command_name(chat_string)
-		for name in names.sort_by
+		# Check longer names first so that we can differentiate between
+		# i.e. /kick and /kickme
+		for name in names.sort_by {|n| -1 * n.length}
 			if /^(\s\ )*(\/)?#{Regexp.quote(name)}/ =~ chat_string
 				return true
 			end

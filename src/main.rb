@@ -20,8 +20,8 @@ Turntabler.run do
   client.on :heartbeat do
     room = client.room
 
-    if (state.room_queue.empty?) && (room.djs.count >= room.dj_capacity)
-      # Enforce that DJs should not go AFK on deck.
+    # Enforce that DJs should not go AFK on deck if the deck is full or there is a queue
+    if (not state.room_queue.empty?) && (room.djs.count >= room.dj_capacity)
       for dj in client.room.djs
         # Don't count time AFK before the last DJ got on deck
         dj_time_afk = Time.now - state.last_activity[dj]
