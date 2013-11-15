@@ -1,8 +1,7 @@
 Kevbot
 ======
 
-A robot for the [High-Energy EMD turntable.fm room].
-http://turntable.fm/highenergy_edm
+A robot for the [High-Energy EMD turntable.fm room](http://turntable.fm/highenergy_edm).
 
 Setting Up
 ==========
