@@ -3,14 +3,6 @@ Kevbot
 
 A robot for the [High-Energy EMD turntable.fm room](http://turntable.fm/highenergy_edm).
 
-Setting Up
-==========
-
-First, you need to download the [Turntabler gem](https://github.com/obrie/turntabler/):
-http://rubygems.org/gems/turntabler
-
-Second, you need to set up your `config.yaml`. Copy `config.yaml.example` to `config.yaml` (in the same directory) and replace its values with the ones your room and bot uses.
-
 Running Locally
 ===============
 
